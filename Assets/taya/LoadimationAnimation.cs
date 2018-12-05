@@ -27,6 +27,8 @@ public class LoadimationAnimation : MonoBehaviour
     static public bool animReady = true;//TayaAdded
     static public bool stopAnim = false;//TayaAdded
 
+    ThrowScript t = new ThrowScript();
+
     void Start()
     {
         if (!multiSpriteTexture) return;
@@ -46,14 +48,25 @@ public class LoadimationAnimation : MonoBehaviour
 
     void Animate()
     {
-        if (animateVariationsCounter == sprites.Length || stopAnim)
+        if (stopAnim)
         {
             animateVariationsCounter = 0;
-            cacheRenderer.sprite = sprites[0];
-
             if (stopAnim) cacheRenderer.sprite = null;
             stopAnim = false;
             animReady = true;
+            return;
+        }
+
+        if (cacheRenderer.sprite == sprites[8])
+        {
+            animateVariationsCounter = 0;
+
+            ThrowScript.ThrowExecute();
+
+            cacheRenderer.sprite = null;
+            stopAnim = false;
+            animReady = true;
+
             return;
         }
 

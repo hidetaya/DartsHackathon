@@ -6,11 +6,14 @@ public class ThrowScript : MonoBehaviour
 {
     public Camera camera;
     private bool isResult;
+    static Rigidbody r;
+
 
     // Use this for initialization
     void Start()
     {
         transform.position = RayScript.handPosition;
+        r = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -18,9 +21,14 @@ public class ThrowScript : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.A))
         {
-            Vector3 direction = RayScript.ray.direction;
-            GetComponent<Rigidbody>().AddForce(direction.normalized * 15);
+            ThrowExecute();
         }
+    }
+
+    public static void ThrowExecute()
+    {
+        Vector3 direction = RayScript.ray.direction;
+        r.AddForce(direction.normalized * 120);
     }
 
     //オブジェクトが衝突したとき
