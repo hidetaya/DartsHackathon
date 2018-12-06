@@ -9,14 +9,17 @@ public class CalcScore : MonoBehaviour
     //static bool isFirstHit;
     static bool isFirstMulti;
 
+    private static GameObject scoreText;
     private static GameObject messageText;
+
     private int finalScore = 101;
     private int temp;
 
     // Use this for initialization
     void Start()
     {
-        messageText = GameObject.Find("ScoreText");
+        scoreText = GameObject.Find("ScoreText");
+        messageText = GameObject.Find("ResultText");
     }
 
     // Update is called once per frame
@@ -25,42 +28,60 @@ public class CalcScore : MonoBehaviour
 
     }
 
-    public int  Execute(string objectName)
+    public int Execute(string objectName)
     {
         //if (isFirstHit) DisplayText(score);
         if (objectName == "Trx2" || objectName == "Trx3")
-            return 0;
-
+        {
+            score = 0;
+        }
         else
         {
             score = int.Parse(objectName.Substring(2));
             //isFirstHit = true;
         }
 
+        if (score == 0)
+        {
+            ResultText();
+        }
+
         return score;
     }
+
+    public void ResultText()
+    {
+              
+    }
+
+    static void DelayResultText()
+    {
+        messageText.GetComponent<TextMesh>().text = "Miss!";
+    }
+
+
 
     public void DisplayText(int point)
     {
         Debug.Log("score:" + score);
         Debug.Log("point:" + point);
-        Debug.Log("meshtext:" + messageText.name);
+        Debug.Log("meshtext:" + scoreText.name);
 
         temp = finalScore - point;
 
         if (temp == 0)
         {
-            messageText.GetComponent<TextMesh>().text = "Finished";
+            scoreText.GetComponent<TextMesh>().text = "Finished";
         }
         else if (temp > 0)
         {
-            messageText.GetComponent<TextMesh>().text = temp.ToString();
+            scoreText.GetComponent<TextMesh>().text = temp.ToString();
         }
         else if (temp < 0)
         {
-            messageText.GetComponent<TextMesh>().text = temp.ToString();
+            scoreText.GetComponent<TextMesh>().text = temp.ToString();
             Thread.Sleep(300);
-            messageText.GetComponent<TextMesh>().text = finalScore.ToString();
+            scoreText.GetComponent<TextMesh>().text = finalScore.ToString();
         }
 
         ThrowScript.isDisplayed = true;

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading;
 
 public class ThrowScript : MonoBehaviour
 {
@@ -51,10 +52,21 @@ public class ThrowScript : MonoBehaviour
                 calcScore.DisplayText(score);
                 //Debug.Log(score);
             }
+            else
+            {
+                calcScore.ResultText();
+            }
 
             //Debug.Log(collider.gameObject.name);
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+
         }
+        else
+        {
+            //検討
+            //Invoke("CalcScore.DelayResultText", 3f);
+        }
+
     }
 }
