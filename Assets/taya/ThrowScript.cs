@@ -5,8 +5,11 @@ using UnityEngine;
 public class ThrowScript : MonoBehaviour
 {
     public Camera camera;
-    private bool isResult;
+    public static bool isDisplayed = true;
+    public static bool isResult;
     static Rigidbody r;
+
+    private CalcScore calcScore;
 
 
     // Use this for initialization
@@ -14,6 +17,8 @@ public class ThrowScript : MonoBehaviour
     {
         transform.position = RayScript.handPosition;
         r = GetComponent<Rigidbody>();
+
+        calcScore = new CalcScore();
     }
 
     // Update is called once per frame
@@ -34,16 +39,20 @@ public class ThrowScript : MonoBehaviour
     //オブジェクトが衝突したとき
     void OnTriggerEnter(Collider collider)
     {
-        if (collider.gameObject.layer == 9)
+        if (collider.gameObject.layer == 9 && isDisplayed)
         {
             if (isResult) return;
-            int score = CalcScore.Execute(collider.gameObject.name);
+            int score = calcScore.Execute(collider.gameObject.name);
+
             if (score != 0)
             {
                 isResult = true;
-                Debug.Log(score);
+                isDisplayed = false;
+                calcScore.DisplayText(score);
+                //Debug.Log(score);
             }
-            Debug.Log(collider.gameObject.name);
+
+            //Debug.Log(collider.gameObject.name);
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
         }
