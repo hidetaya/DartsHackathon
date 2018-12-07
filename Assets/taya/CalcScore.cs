@@ -51,7 +51,7 @@ public class CalcScore : MonoBehaviour
 
     public void ResultText()
     {
-              
+        //Message    
     }
 
     static void DelayResultText()
@@ -78,7 +78,6 @@ public class CalcScore : MonoBehaviour
         else if (temp < 0)
         {
             scoreText.GetComponent<TextMesh>().text = temp.ToString();
-
             scoreText.GetComponent<TextMesh>().text = finalScore.ToString();
         }
 

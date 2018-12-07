@@ -32,40 +32,26 @@ public class ThrowScript : MonoBehaviour
             ThrowExecute();
         }
 
-        //Trueで投げる
         if (isThrowReady)
         {
+            isThrowReady = false;
+            //投げる
             ThrowExecute();
         }
-
-        //if (isDartsBack)
-        //{
-        //    isDartsBack = !isDartsBack;
-        //    transform.position = RayScript.handPosition;
-        //}
     }
 
     public void ThrowExecute()
     {
         Vector3 direction = RayScript.ray.direction;
-        GetComponent<Rigidbody>().AddForce(direction.normalized * 3);
+        GetComponent<Rigidbody>().AddForce(direction.normalized * 60);
 
-        //StartCoroutine("ReturnDarts", 2);
-    }
-
-    //投げる前にアニメーションが出ないようにする
-    IEnumerator HideWaitAnim()
-    {
-        RayScript.isAnim = false;
-        yield return new WaitForSeconds(8); // 待機      
-        RayScript.isAnim = true;
+        StartCoroutine("ReturnDarts", 4);
     }
 
     //ダーツを手元に戻す
     IEnumerator ReturnDarts(int sec)
     {
         yield return new WaitForSeconds(sec); // 待機
-
         transform.position = RayScript.handPosition;
     }
 
@@ -102,11 +88,6 @@ public class ThrowScript : MonoBehaviour
             }
 
         }
-
-
-        ////n秒待って矢を手元に移動
-        //StartCoroutine("ReturnDarts", 3);
-        //transform.position = RayScript.handPosition;
     }
 
 

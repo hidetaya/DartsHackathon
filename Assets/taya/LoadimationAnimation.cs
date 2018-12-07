@@ -49,6 +49,7 @@ public class LoadimationAnimation : MonoBehaviour
 
     void Animate()
     {
+        //Rayが的から外れた場合
         if (stopAnim)
         {
             animateVariationsCounter = 0;
@@ -60,6 +61,7 @@ public class LoadimationAnimation : MonoBehaviour
             return;
         }
 
+        //アニメーションが終了した場合
         if (cacheRenderer.sprite == sprites[8])
         {
             animateVariationsCounter = 0;
