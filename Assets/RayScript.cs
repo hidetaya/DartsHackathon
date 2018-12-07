@@ -19,7 +19,7 @@ public class RayScript : MonoBehaviour
     {
         laserLine = GetComponent<LineRenderer>();
         Vector3 v = camera.transform.position;
-        handPosition = new Vector3(v.x, v.y + 0.5f, v.z + 0.2f);
+        handPosition = new Vector3(v.x, v.y, v.z);
     }
 
     void Start()
