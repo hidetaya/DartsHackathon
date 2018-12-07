@@ -5,19 +5,20 @@ using System.Threading;
 
 public class ThrowScript : MonoBehaviour
 {
-    public Camera camera;
     public static bool isDisplayed = true;
     public static bool isResult;
-    static Rigidbody r;
+    public static bool isThrowReady = false;
+
+    //private Rigidbody r;
+    private bool isDartsBack = true;
 
     private CalcScore calcScore;
-
 
     // Use this for initialization
     void Start()
     {
         transform.position = RayScript.handPosition;
-        r = GetComponent<Rigidbody>();
+        //r = GetComponent<Rigidbody>();
 
         calcScore = new CalcScore();
     }
@@ -27,18 +28,60 @@ public class ThrowScript : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.A))
         {
+            StartCoroutine("HideWaitAnim");
             ThrowExecute();
         }
+
+        //Trueで投げる
+        if (isThrowReady)
+        {
+            ThrowExecute();
+        }
+
+        //if (isDartsBack)
+        //{
+        //    isDartsBack = !isDartsBack;
+        //    transform.position = RayScript.handPosition;
+        //}
     }
 
-    public static void ThrowExecute()
+    public void ThrowExecute()
     {
         Vector3 direction = RayScript.ray.direction;
-        r.AddForce(direction.normalized * 120);
+        GetComponent<Rigidbody>().AddForce(direction.normalized * 3);
+
+        //StartCoroutine("ReturnDarts", 2);
+    }
+
+    //投げる前にアニメーションが出ないようにする
+    IEnumerator HideWaitAnim()
+    {
+        RayScript.isAnim = false;
+        yield return new WaitForSeconds(8); // 待機      
+        RayScript.isAnim = true;
+    }
+
+    //ダーツを手元に戻す
+    IEnumerator ReturnDarts(int sec)
+    {
+        yield return new WaitForSeconds(sec); // 待機
+
+        transform.position = RayScript.handPosition;
     }
 
     //オブジェクトが衝突したとき
     void OnTriggerEnter(Collider collider)
+    {
+        ////効いてない！？
+        //GetComponent<Rigidbody>().velocity = Vector3.zero;
+        //GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+
+        HitTarget(collider);
+
+        isThrowReady = true;
+    }
+
+    void HitTarget(Collider collider)
     {
         if (collider.gameObject.layer == 9 && isDisplayed)
         {
@@ -50,6 +93,7 @@ public class ThrowScript : MonoBehaviour
                 isResult = true;
                 isDisplayed = false;
                 calcScore.DisplayText(score);
+
                 //Debug.Log(score);
             }
             else
@@ -57,16 +101,13 @@ public class ThrowScript : MonoBehaviour
                 calcScore.ResultText();
             }
 
-            //Debug.Log(collider.gameObject.name);
-            GetComponent<Rigidbody>().velocity = Vector3.zero;
-            GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-
-        }
-        else
-        {
-            //検討
-            //Invoke("CalcScore.DelayResultText", 3f);
         }
 
+
+        ////n秒待って矢を手元に移動
+        //StartCoroutine("ReturnDarts", 3);
+        //transform.position = RayScript.handPosition;
     }
+
+
 }

@@ -12,7 +12,7 @@ public class CalcScore : MonoBehaviour
     private static GameObject scoreText;
     private static GameObject messageText;
 
-    private int finalScore = 101;
+    private static int finalScore = 101;
     private int temp;
 
     // Use this for initialization
@@ -59,8 +59,6 @@ public class CalcScore : MonoBehaviour
         messageText.GetComponent<TextMesh>().text = "Miss!";
     }
 
-
-
     public void DisplayText(int point)
     {
         Debug.Log("score:" + score);
@@ -80,7 +78,7 @@ public class CalcScore : MonoBehaviour
         else if (temp < 0)
         {
             scoreText.GetComponent<TextMesh>().text = temp.ToString();
-            Thread.Sleep(300);
+
             scoreText.GetComponent<TextMesh>().text = finalScore.ToString();
         }
 

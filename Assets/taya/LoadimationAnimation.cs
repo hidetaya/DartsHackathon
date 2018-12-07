@@ -27,18 +27,19 @@ public class LoadimationAnimation : MonoBehaviour
     static public bool animReady = true;//TayaAdded
     static public bool stopAnim = false;//TayaAdded
 
-    ThrowScript t = new ThrowScript();
-
     void Start()
     {
         if (!multiSpriteTexture) return;
         cacheRenderer = GetComponent<SpriteRenderer>();
+        cacheRenderer.sprite = null;
     }
 
     void Update()
     {
         if (touched && animReady)
         {
+            StartCoroutine("HideWaitAnim");
+
             animReady = false;
             touched = false;
             Invoke("Animate", 1f - animationSpeed);
@@ -52,6 +53,8 @@ public class LoadimationAnimation : MonoBehaviour
         {
             animateVariationsCounter = 0;
             if (stopAnim) cacheRenderer.sprite = null;
+
+            RayScript.isAnim = true;
             stopAnim = false;
             animReady = true;
             return;
@@ -60,10 +63,11 @@ public class LoadimationAnimation : MonoBehaviour
         if (cacheRenderer.sprite == sprites[8])
         {
             animateVariationsCounter = 0;
-
-            ThrowScript.ThrowExecute();
-
             cacheRenderer.sprite = null;
+
+            //投げる
+            ThrowScript.isThrowReady = true;
+
             stopAnim = false;
             animReady = true;
 
@@ -88,6 +92,14 @@ public class LoadimationAnimation : MonoBehaviour
         cacheRenderer.sprite = s;
         animateVariationsCounter += countAdd;
         anim: Invoke("Animate", 1f - animationSpeed);
+    }
+
+    //アニメーション表示待ち
+    IEnumerator HideWaitAnim()
+    {
+        RayScript.isAnim = false;
+        yield return new WaitForSeconds(5); // num秒待機
+        RayScript.isAnim = true;
     }
 
     void RotateSprite()
