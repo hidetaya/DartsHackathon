@@ -53,6 +53,11 @@ public class ThrowScript : MonoBehaviour
         {
             ThrowExecute();
         }
+
+        if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger))
+        {
+            ThrowExecute();
+        }
     }
 
     public static void ThrowExecute()
