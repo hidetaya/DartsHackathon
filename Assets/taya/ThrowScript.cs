@@ -2,24 +2,37 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Threading;
+using System;
 
 public class ThrowScript : MonoBehaviour
 {
-    public Camera camera;
     public static bool isDisplayed = true;
     public static bool isResult;
-    static Rigidbody r;
+    public static bool isThrowReady = false;
+
+    public static int finalScore = 101;
+
+    //private Rigidbody r;
+    private bool isDartsBack = true;
 
     private CalcScore calcScore;
 
-
+    //設定されない
+    //private LoadimationAnimation m_throwExecute;
     // Use this for initialization
+
+    //反映されない
+    void Awake()
+    {
+        //m_throwExecute.ThrowTrigger += ThrowExecute;
+        calcScore = new CalcScore();
+    }
+
     void Start()
     {
         transform.position = RayScript.handPosition;
-        r = GetComponent<Rigidbody>();
+        //r = GetComponent<Rigidbody>();
 
-        calcScore = new CalcScore();
     }
 
     // Update is called once per frame
@@ -27,21 +40,59 @@ public class ThrowScript : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.A))
         {
+            StartCoroutine("HideWaitAnim");
+            ThrowExecute();
+        }
+
+        if (isThrowReady)
+        {
+            isThrowReady = false;
+            //投げる
             ThrowExecute();
         }
     }
 
-    public static void ThrowExecute()
+    public void ThrowExecute()
     {
         Vector3 direction = RayScript.ray.direction;
-        r.AddForce(direction.normalized * 120);
+        GetComponent<Rigidbody>().AddForce(direction.normalized * 60);
+
+        StartCoroutine("ReturnDarts", 3);
+    }
+
+    IEnumerator Sleep()
+    {
+        yield return new WaitForSeconds(3);
+
+    }
+
+    //ダーツを手元に戻す
+    IEnumerator ReturnDarts(int sec)
+    {
+        yield return new WaitForSeconds(sec); // 待機
+        transform.position = RayScript.handPosition;
     }
 
     //オブジェクトが衝突したとき
     void OnTriggerEnter(Collider collider)
     {
-        if (collider.gameObject.layer == 9 && isDisplayed)
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
+        GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+
+        HitTarget(collider);
+
+    }
+
+    void HitTarget(Collider collider)
+    {
+        Debug.Log("1");
+        Debug.Log(collider.gameObject.name);
+
+
+        if (LayerMask.LayerToName(collider.gameObject.layer) == "Target" && isDisplayed)
         {
+            Debug.Log("2");
+
             if (isResult) return;
             int score = calcScore.Execute(collider.gameObject.name);
 
@@ -50,23 +101,16 @@ public class ThrowScript : MonoBehaviour
                 isResult = true;
                 isDisplayed = false;
                 calcScore.DisplayText(score);
-                //Debug.Log(score);
+                isResult = false;
+                Debug.Log(score);
             }
             else
             {
                 calcScore.ResultText();
             }
 
-            //Debug.Log(collider.gameObject.name);
-            GetComponent<Rigidbody>().velocity = Vector3.zero;
-            GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-
         }
-        else
-        {
-            //検討
-            //Invoke("CalcScore.DelayResultText", 3f);
-        }
-
     }
+
+
 }

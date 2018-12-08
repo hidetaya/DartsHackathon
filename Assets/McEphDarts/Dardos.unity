@@ -657,6 +657,110 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 180.26399
       objectReference: {fileID: 0}
+    - target: {fileID: 4908301313172508, guid: 6319cfa2f34b54841a7b04da40baa953, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -0.026
+      objectReference: {fileID: 0}
+    - target: {fileID: 4908301313172508, guid: 6319cfa2f34b54841a7b04da40baa953, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0.0332
+      objectReference: {fileID: 0}
+    - target: {fileID: 1440678828669248, guid: 6319cfa2f34b54841a7b04da40baa953, type: 2}
+      propertyPath: m_TagString
+      value: DartsObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 1296830857575996, guid: 6319cfa2f34b54841a7b04da40baa953, type: 2}
+      propertyPath: m_TagString
+      value: DartsObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 1455680063577968, guid: 6319cfa2f34b54841a7b04da40baa953, type: 2}
+      propertyPath: m_TagString
+      value: DartsObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 1266892693692506, guid: 6319cfa2f34b54841a7b04da40baa953, type: 2}
+      propertyPath: m_TagString
+      value: DartsObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 1032451643062060, guid: 6319cfa2f34b54841a7b04da40baa953, type: 2}
+      propertyPath: m_TagString
+      value: DartsObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 1288123474326510, guid: 6319cfa2f34b54841a7b04da40baa953, type: 2}
+      propertyPath: m_TagString
+      value: DartsObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 1032097072939948, guid: 6319cfa2f34b54841a7b04da40baa953, type: 2}
+      propertyPath: m_TagString
+      value: DartsObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 1956371285243986, guid: 6319cfa2f34b54841a7b04da40baa953, type: 2}
+      propertyPath: m_TagString
+      value: DartsObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 1412524446729162, guid: 6319cfa2f34b54841a7b04da40baa953, type: 2}
+      propertyPath: m_TagString
+      value: DartsObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 1017779552081638, guid: 6319cfa2f34b54841a7b04da40baa953, type: 2}
+      propertyPath: m_TagString
+      value: DartsObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 1338145552072976, guid: 6319cfa2f34b54841a7b04da40baa953, type: 2}
+      propertyPath: m_TagString
+      value: DartsObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 1987446998445070, guid: 6319cfa2f34b54841a7b04da40baa953, type: 2}
+      propertyPath: m_TagString
+      value: DartsObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 1563943890968990, guid: 6319cfa2f34b54841a7b04da40baa953, type: 2}
+      propertyPath: m_TagString
+      value: DartsObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 1057397767989374, guid: 6319cfa2f34b54841a7b04da40baa953, type: 2}
+      propertyPath: m_TagString
+      value: DartsObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 1120151093555528, guid: 6319cfa2f34b54841a7b04da40baa953, type: 2}
+      propertyPath: m_TagString
+      value: DartsObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 1392488377631406, guid: 6319cfa2f34b54841a7b04da40baa953, type: 2}
+      propertyPath: m_TagString
+      value: DartsObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 1608935877152996, guid: 6319cfa2f34b54841a7b04da40baa953, type: 2}
+      propertyPath: m_TagString
+      value: DartsObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 1036890773787950, guid: 6319cfa2f34b54841a7b04da40baa953, type: 2}
+      propertyPath: m_TagString
+      value: DartsObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 1821638383766886, guid: 6319cfa2f34b54841a7b04da40baa953, type: 2}
+      propertyPath: m_TagString
+      value: DartsObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 1651247448843616, guid: 6319cfa2f34b54841a7b04da40baa953, type: 2}
+      propertyPath: m_TagString
+      value: DartsObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 1702204895491174, guid: 6319cfa2f34b54841a7b04da40baa953, type: 2}
+      propertyPath: m_TagString
+      value: DartsObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 1228732675178166, guid: 6319cfa2f34b54841a7b04da40baa953, type: 2}
+      propertyPath: m_TagString
+      value: DartsObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 1376592778831184, guid: 6319cfa2f34b54841a7b04da40baa953, type: 2}
+      propertyPath: m_TagString
+      value: DartsObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 1965046169947082, guid: 6319cfa2f34b54841a7b04da40baa953, type: 2}
+      propertyPath: m_TagString
+      value: DartsObject
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6319cfa2f34b54841a7b04da40baa953, type: 2}
   m_IsPrefabAsset: 0
@@ -5867,7 +5971,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87219fe9f0742094ea31e50e763db9ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 925982990}
 --- !u!54 &1330223803
 Rigidbody:
   m_ObjectHideFlags: 0
