@@ -5872,7 +5872,7 @@ MonoBehaviour:
   hand: {fileID: 1954922699}
   throwHand: {fileID: 1954922700}
   hitSound: {fileID: 8300000, guid: 3fbf764126a9b834b9a1981d7b58fbc5, type: 3}
-  kanseiSound: {fileID: 8300000, guid: 794e2f9f570db42fca42a3effdeb6f25, type: 3}
+  kanseiSound: {fileID: 8300000, guid: 918bb1c3b77034ffcb81ec4780645567, type: 3}
 --- !u!54 &1330223803
 Rigidbody:
   m_ObjectHideFlags: 0
