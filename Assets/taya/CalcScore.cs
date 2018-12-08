@@ -70,7 +70,7 @@ public class CalcScore : MonoBehaviour
         Debug.Log("point:" + point);
         Debug.Log("meshtext:" + scoreText.name);
 
-        ThrowScript.temp = ThrowScript.finalScore;
+        //ThrowScript.temp = ThrowScript.finalScore;
         ThrowScript.finalScore = ThrowScript.finalScore - point;
 
         if (ThrowScript.finalScore == 0)
@@ -78,12 +78,13 @@ public class CalcScore : MonoBehaviour
             scoreText.GetComponent<TextMesh>().text = "Finished";
         }
         else if (ThrowScript.finalScore > 0)
-        {
+        {  
+            messageText.GetComponent<TextMesh>().text = "Play" + ThrowScript.playNum.ToString();
             scoreText.GetComponent<TextMesh>().text = ThrowScript.finalScore.ToString();
         }
         else if (ThrowScript.finalScore < 0)
         {
-            scoreText.GetComponent<TextMesh>().text = ThrowScript.temp.ToString();
+            scoreText.GetComponent<TextMesh>().text = "Finished";
         }
 
         ThrowScript.isDisplayed = true;

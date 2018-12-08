@@ -11,11 +11,13 @@ public class ThrowScript : MonoBehaviour
     public static bool isThrowReady = false;
 
     public static int finalScore;
-    public static int temp;
+    //public static int temp;
 
     private bool isDartsBack = true;
 
     private CalcScore calcScore;
+
+    public static int playNum;
 
     //設定されない
     //private LoadimationAnimation m_throwExecute;
@@ -24,8 +26,9 @@ public class ThrowScript : MonoBehaviour
     //反映されない
     void Awake()
     {
+        playNum = 0;
         //m_throwExecute.ThrowTrigger += ThrowExecute;
-        finalScore = 30;
+        finalScore = 101;
         calcScore = new CalcScore();
     }
 
@@ -54,6 +57,8 @@ public class ThrowScript : MonoBehaviour
 
     public void ThrowExecute()
     {
+        playNum++;
+
         Vector3 direction = RayScript.ray.direction;
         GetComponent<Rigidbody>().AddForce(direction.normalized * 60);
 
