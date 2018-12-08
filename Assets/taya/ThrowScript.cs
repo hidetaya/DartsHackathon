@@ -10,9 +10,9 @@ public class ThrowScript : MonoBehaviour
     public static bool isResult;
     public static bool isThrowReady = false;
 
-    public static int finalScore = 101;
+    public static int finalScore;
+    public static int temp;
 
-    //private Rigidbody r;
     private bool isDartsBack = true;
 
     private CalcScore calcScore;
@@ -25,13 +25,13 @@ public class ThrowScript : MonoBehaviour
     void Awake()
     {
         //m_throwExecute.ThrowTrigger += ThrowExecute;
+        finalScore = 30;
         calcScore = new CalcScore();
     }
 
     void Start()
     {
         transform.position = RayScript.handPosition;
-        //r = GetComponent<Rigidbody>();
 
     }
 

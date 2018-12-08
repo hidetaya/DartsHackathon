@@ -13,11 +13,11 @@ public class CalcScore : MonoBehaviour
     private static GameObject messageText;
 
     //private static int finalScore;
+   
 
 
     void Awake()
     {
-        ThrowScript.finalScore = 101;
     }
 
     // Use this for initialization
@@ -66,23 +66,24 @@ public class CalcScore : MonoBehaviour
 
     public void DisplayText(int point)
     {
-        Debug.Log("score:" + score);
+        Debug.Log("finalscore:" + ThrowScript.finalScore);
         Debug.Log("point:" + point);
         Debug.Log("meshtext:" + scoreText.name);
 
-        int temp = ThrowScript.finalScore - point;
+        ThrowScript.temp = ThrowScript.finalScore;
+        ThrowScript.finalScore = ThrowScript.finalScore - point;
 
-        if (temp == 0)
+        if (ThrowScript.finalScore == 0)
         {
             scoreText.GetComponent<TextMesh>().text = "Finished";
         }
-        else if (temp > 0)
-        {
-            scoreText.GetComponent<TextMesh>().text = temp.ToString();
-        }
-        else if (temp < 0)
+        else if (ThrowScript.finalScore > 0)
         {
             scoreText.GetComponent<TextMesh>().text = ThrowScript.finalScore.ToString();
+        }
+        else if (ThrowScript.finalScore < 0)
+        {
+            scoreText.GetComponent<TextMesh>().text = ThrowScript.temp.ToString();
         }
 
         ThrowScript.isDisplayed = true;
