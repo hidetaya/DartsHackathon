@@ -5870,6 +5870,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camera: {fileID: 925982990}
   hitParticlePrefab: {fileID: 19800004, guid: 757df604761b8ef42831192c70ee1099, type: 2}
+  sound: {fileID: 8300000, guid: 3fbf764126a9b834b9a1981d7b58fbc5, type: 3}
 --- !u!54 &1330223803
 Rigidbody:
   m_ObjectHideFlags: 0

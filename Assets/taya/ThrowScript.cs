@@ -9,6 +9,10 @@ public class ThrowScript : MonoBehaviour
     public static bool isDisplayed = true;
     public static bool isResult;
     public ParticleSystem hitParticlePrefab; // 的に当たったときのパーティクル
+
+    private AudioSource audioSource;        // AudioSorceを格納する変数の宣言.
+    public AudioClip sound;             // 効果音を格納する変数の宣言.
+
     static Rigidbody r;
 
     private CalcScore calcScore;
@@ -17,6 +21,10 @@ public class ThrowScript : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        audioSource = gameObject.AddComponent<AudioSource>();   // AudioSorceコンポーネントを追加し、変数に代入.
+        audioSource.clip = sound;       // 鳴らす音(変数)を格納.
+        audioSource.loop = false;       // 音のループなし。
+
         transform.position = RayScript.handPosition;
         r = GetComponent<Rigidbody>();
 
@@ -58,7 +66,11 @@ public class ThrowScript : MonoBehaviour
                 calcScore.ResultText();
             }
 
+            // 矢が当たったとき、光らせる
             Instantiate(hitParticlePrefab, transform.position, transform.rotation);
+
+            // 矢が当たったとき、音を鳴らす
+            audioSource.Play();
 
             //Debug.Log(collider.gameObject.name);
             GetComponent<Rigidbody>().velocity = Vector3.zero;
