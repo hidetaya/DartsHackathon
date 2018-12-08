@@ -5,11 +5,14 @@ using UnityEngine;
 public class RayScript : MonoBehaviour
 {
 
-    public Camera camera;
+    public new Camera camera;
 
-    static public Vector3 handPosition;
-    static public Ray ray;
-    static public RaycastHit hit;
+    public static Vector3 handPosition;
+    public static Ray ray;
+    public static RaycastHit hit;
+
+    //投擲～n秒後までレイが出ないようにする
+    public static bool isAnim = true;
 
     private LineRenderer laserLine;
 
@@ -19,7 +22,7 @@ public class RayScript : MonoBehaviour
     {
         laserLine = GetComponent<LineRenderer>();
         Vector3 v = camera.transform.position;
-        handPosition = new Vector3(v.x, v.y + 0.5f, v.z + 0.2f);
+        handPosition = new Vector3(v.x, v.y, v.z);
     }
 
     void Start()
@@ -30,6 +33,11 @@ public class RayScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        SplashRay();
+    }
+
+    void SplashRay()
+    {
         ray = new Ray(camera.transform.position, camera.transform.forward);
 
         if (Physics.Raycast(ray, out hit))
@@ -38,17 +46,19 @@ public class RayScript : MonoBehaviour
 
             if (hit.collider.gameObject.tag == "DartsObject")
             {
-                LoadimationAnimation.touched = true;
+                //投げ中はダーツオブジェクトにあたってもアニメーションがスタートにならないようにする
+                if (isAnim)
+                {
+                    isAnim = false;
+                    //アニメーションスタート
+                    LoadimationAnimation.touched = true;
+                }
             }
-
             else
             {
                 LoadimationAnimation.stopAnim = true;
             }
 
-            //Debug.Log(hit.collider.gameObject.name);
-            //Debug.Log(hit.collider.gameObject.tag);
         }
-
     }
 }

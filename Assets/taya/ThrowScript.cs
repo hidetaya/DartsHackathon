@@ -24,10 +24,29 @@ public class ThrowScript : MonoBehaviour
 
     private CalcScore calcScore;
 
+    public static bool isThrowReady = false;
+
+    public static int finalScore;
+    //public static int temp;
+
+    private bool isDartsBack = true;
+
+    public static int playNum;
+
+
+    void Awake()
+    {
+        playNum = 0;
+        //m_throwExecute.ThrowTrigger += ThrowExecute;
+        finalScore = 101;
+        calcScore = new CalcScore();
+    }
 
     // Use this for initialization
     void Start()
     {
+        transform.position = RayScript.handPosition;
+
         throwHand = hand.GetComponent<Animator>();
         throwHand.SetBool("Play", false);
 
@@ -51,6 +70,7 @@ public class ThrowScript : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.A))
         {
+            StartCoroutine("HideWaitAnim");
             ThrowExecute();
         }
 
@@ -58,33 +78,60 @@ public class ThrowScript : MonoBehaviour
         {
             ThrowExecute();
         }
+
+        if (isThrowReady)
+        {
+            isThrowReady = false;
+            //投げる
+            ThrowExecute();
+        }
     }
 
-    public static void ThrowExecute()
+    public void ThrowExecute()
     {
         Vector3 direction = RayScript.ray.direction;
         r.AddForce(direction.normalized * 120);
+
+        playNum++;
+
+        GetComponent<Rigidbody>().AddForce(direction.normalized * 60);
+
+        StartCoroutine("ReturnDarts", 3);
+    }
+
+    IEnumerator Sleep()
+    {
+        yield return new WaitForSeconds(3);
+    }
+
+    //ダーツを手元に戻す
+    IEnumerator ReturnDarts(int sec)
+    {
+        yield return new WaitForSeconds(sec); // 待機
+        transform.position = RayScript.handPosition;
     }
 
     //オブジェクトが衝突したとき
     void OnTriggerEnter(Collider collider)
     {
-        if (collider.gameObject.layer == 9 && isDisplayed)
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
+        GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+
+        HitTarget(collider);
+    }
+
+    void HitTarget(Collider collider)
+    {
+        Debug.Log("1");
+        Debug.Log(collider.gameObject.name);
+
+
+        if (LayerMask.LayerToName(collider.gameObject.layer) == "Target" && isDisplayed)
         {
+            Debug.Log("2");
+
             if (isResult) return;
             int score = calcScore.Execute(collider.gameObject.name);
-
-            if (score != 0)
-            {
-                isResult = true;
-                isDisplayed = false;
-                calcScore.DisplayText(score);
-                //Debug.Log(score);
-            }
-            else
-            {
-                calcScore.ResultText();
-            }
 
             // 矢が当たったとき、光らせる
             Instantiate(hitParticlePrefab, transform.position, transform.rotation);
@@ -96,15 +143,18 @@ public class ThrowScript : MonoBehaviour
             // 手の動きを再生
             throwHand.SetBool("Play", true);
 
-            //Debug.Log(collider.gameObject.name);
-            GetComponent<Rigidbody>().velocity = Vector3.zero;
-            GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-
-        }
-        else
-        {
-            //検討
-            //Invoke("CalcScore.DelayResultText", 3f);
+            if (score != 0)
+            {
+                isResult = true;
+                isDisplayed = false;
+                calcScore.DisplayText(score);
+                isResult = false;
+                Debug.Log(score);
+            }
+            else
+            {
+                calcScore.ResultText();
+            }
         }
 
     }

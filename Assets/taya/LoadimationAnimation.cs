@@ -3,6 +3,9 @@ using UnityEngine;
 using UnityEditor;
 #endif
 using System.Collections;
+using System;
+
+
 public class LoadimationAnimation : MonoBehaviour
 {
     public Texture multiSpriteTexture;
@@ -27,18 +30,21 @@ public class LoadimationAnimation : MonoBehaviour
     static public bool animReady = true;//TayaAdded
     static public bool stopAnim = false;//TayaAdded
 
-    ThrowScript t = new ThrowScript();
+    public event Action ThrowTrigger;
 
     void Start()
     {
         if (!multiSpriteTexture) return;
         cacheRenderer = GetComponent<SpriteRenderer>();
+        cacheRenderer.sprite = null;
     }
 
     void Update()
     {
         if (touched && animReady)
         {
+            StartCoroutine("HideWaitAnim");
+
             animReady = false;
             touched = false;
             Invoke("Animate", 1f - animationSpeed);
@@ -48,22 +54,28 @@ public class LoadimationAnimation : MonoBehaviour
 
     void Animate()
     {
+        //Rayが的から外れた場合
         if (stopAnim)
         {
             animateVariationsCounter = 0;
             if (stopAnim) cacheRenderer.sprite = null;
+
+            RayScript.isAnim = true;
             stopAnim = false;
             animReady = true;
             return;
         }
 
-        if (cacheRenderer.sprite == sprites[8])
+        //アニメーションが終了した場合
+        if (cacheRenderer.sprite == sprites[8] && !ThrowScript.isThrowReady)
         {
             animateVariationsCounter = 0;
-
-            ThrowScript.ThrowExecute();
-
             cacheRenderer.sprite = null;
+
+            //投げる
+            ThrowScript.isThrowReady = true;
+            //ThrowTrigger();
+
             stopAnim = false;
             animReady = true;
 
@@ -87,14 +99,22 @@ public class LoadimationAnimation : MonoBehaviour
         Sprite s = sprites[animateVariationsCounter % sprites.Length];
         cacheRenderer.sprite = s;
         animateVariationsCounter += countAdd;
-        anim: Invoke("Animate", 1f - animationSpeed);
+    anim: Invoke("Animate", 1f - animationSpeed);
+    }
+
+    //アニメーション表示待ち
+    IEnumerator HideWaitAnim()
+    {
+        RayScript.isAnim = false;
+        yield return new WaitForSeconds(10); // num秒待機
+        RayScript.isAnim = true;
     }
 
     void RotateSprite()
     {
         if (!rotate || rotation == 0) goto anim;
         transform.Rotate(Vector3.forward * rotation);
-        anim: Invoke("RotateSprite", rotationTick);
+    anim: Invoke("RotateSprite", rotationTick);
     }
 
 #if UNITY_EDITOR
@@ -133,15 +153,15 @@ public class LoadimationAnimationEditor : Editor
     {
         LoadimationAnimation tar = (target as LoadimationAnimation);
         string spriteSheet = AssetDatabase.GetAssetPath(tar.multiSpriteTexture);
-        Object[] objs = AssetDatabase.LoadAllAssetsAtPath(spriteSheet);
+        System.Object[] objs = AssetDatabase.LoadAllAssetsAtPath(spriteSheet);
 
         ArrayList alist = new ArrayList();
-        foreach (Object o in objs)
+        foreach (System.Object o in objs)
         {
             if (o as Sprite != null) alist.Add(o as Sprite);
         }
         tar.sprites = (Sprite[])alist.ToArray(typeof(Sprite));
-        //	objs = null;
+        //  objs = null;
         tar.GetComponent<SpriteRenderer>().sprite = tar.sprites[0];
         EditorUtility.SetDirty(target);
     }

@@ -12,8 +12,13 @@ public class CalcScore : MonoBehaviour
     private static GameObject scoreText;
     private static GameObject messageText;
 
-    private int finalScore = 101;
-    private int temp;
+    //private static int finalScore;
+
+
+
+    void Awake()
+    {
+    }
 
     // Use this for initialization
     void Start()
@@ -51,7 +56,7 @@ public class CalcScore : MonoBehaviour
 
     public void ResultText()
     {
-              
+        //Message    
     }
 
     static void DelayResultText()
@@ -59,29 +64,27 @@ public class CalcScore : MonoBehaviour
         messageText.GetComponent<TextMesh>().text = "Miss!";
     }
 
-
-
     public void DisplayText(int point)
     {
-        Debug.Log("score:" + score);
+        Debug.Log("finalscore:" + ThrowScript.finalScore);
         Debug.Log("point:" + point);
         Debug.Log("meshtext:" + scoreText.name);
 
-        temp = finalScore - point;
+        //ThrowScript.temp = ThrowScript.finalScore;
+        ThrowScript.finalScore = ThrowScript.finalScore - point;
 
-        if (temp == 0)
+        if (ThrowScript.finalScore == 0)
         {
             scoreText.GetComponent<TextMesh>().text = "Finished";
         }
-        else if (temp > 0)
+        else if (ThrowScript.finalScore > 0)
         {
-            scoreText.GetComponent<TextMesh>().text = temp.ToString();
+            messageText.GetComponent<TextMesh>().text = "Play" + ThrowScript.playNum.ToString();
+            scoreText.GetComponent<TextMesh>().text = ThrowScript.finalScore.ToString();
         }
-        else if (temp < 0)
+        else if (ThrowScript.finalScore < 0)
         {
-            scoreText.GetComponent<TextMesh>().text = temp.ToString();
-            Thread.Sleep(300);
-            scoreText.GetComponent<TextMesh>().text = finalScore.ToString();
+            scoreText.GetComponent<TextMesh>().text = "Finished";
         }
 
         ThrowScript.isDisplayed = true;
