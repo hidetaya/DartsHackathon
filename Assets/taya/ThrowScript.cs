@@ -10,6 +10,8 @@ public class ThrowScript : MonoBehaviour
     public static bool isResult;
     public static bool isThrowReady = false;
 
+    public static int finalScore = 101;
+
     //private Rigidbody r;
     private bool isDartsBack = true;
 
@@ -17,21 +19,20 @@ public class ThrowScript : MonoBehaviour
 
     //設定されない
     //private LoadimationAnimation m_throwExecute;
-
     // Use this for initialization
 
     //反映されない
     void Awake()
     {
         //m_throwExecute.ThrowTrigger += ThrowExecute;
+        calcScore = new CalcScore();
     }
 
     void Start()
-    {      
+    {
         transform.position = RayScript.handPosition;
         //r = GetComponent<Rigidbody>();
 
-        calcScore = new CalcScore();
     }
 
     // Update is called once per frame
@@ -59,6 +60,12 @@ public class ThrowScript : MonoBehaviour
         StartCoroutine("ReturnDarts", 3);
     }
 
+    IEnumerator Sleep()
+    {
+        yield return new WaitForSeconds(3);
+
+    }
+
     //ダーツを手元に戻す
     IEnumerator ReturnDarts(int sec)
     {
@@ -69,19 +76,23 @@ public class ThrowScript : MonoBehaviour
     //オブジェクトが衝突したとき
     void OnTriggerEnter(Collider collider)
     {
-        ////効いてない！？
-        //GetComponent<Rigidbody>().velocity = Vector3.zero;
-        //GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
+        GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 
         HitTarget(collider);
 
-        //isThrowReady = true;
     }
 
     void HitTarget(Collider collider)
     {
-        if (collider.gameObject.layer == 9 && isDisplayed)
+        Debug.Log("1");
+        Debug.Log(collider.gameObject.name);
+
+
+        if (LayerMask.LayerToName(collider.gameObject.layer) == "Target" && isDisplayed)
         {
+            Debug.Log("2");
+
             if (isResult) return;
             int score = calcScore.Execute(collider.gameObject.name);
 
@@ -90,8 +101,8 @@ public class ThrowScript : MonoBehaviour
                 isResult = true;
                 isDisplayed = false;
                 calcScore.DisplayText(score);
-
-                //Debug.Log(score);
+                isResult = false;
+                Debug.Log(score);
             }
             else
             {

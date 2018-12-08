@@ -49,6 +49,7 @@ public class RayScript : MonoBehaviour
                 //投げ中はダーツオブジェクトにあたってもアニメーションがスタートにならないようにする
                 if (isAnim)
                 {
+                    isAnim = false;
                     //アニメーションスタート
                     LoadimationAnimation.touched = true;
                 }

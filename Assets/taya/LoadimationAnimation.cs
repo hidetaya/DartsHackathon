@@ -34,7 +34,6 @@ public class LoadimationAnimation : MonoBehaviour
 
     void Start()
     {
-
         if (!multiSpriteTexture) return;
         cacheRenderer = GetComponent<SpriteRenderer>();
         cacheRenderer.sprite = null;
@@ -68,7 +67,7 @@ public class LoadimationAnimation : MonoBehaviour
         }
 
         //アニメーションが終了した場合
-        if (cacheRenderer.sprite == sprites[8])
+        if (cacheRenderer.sprite == sprites[8] && !ThrowScript.isThrowReady)
         {
             animateVariationsCounter = 0;
             cacheRenderer.sprite = null;
@@ -107,7 +106,7 @@ public class LoadimationAnimation : MonoBehaviour
     IEnumerator HideWaitAnim()
     {
         RayScript.isAnim = false;
-        yield return new WaitForSeconds(15); // num秒待機
+        yield return new WaitForSeconds(10); // num秒待機
         RayScript.isAnim = true;
     }
 
