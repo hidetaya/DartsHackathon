@@ -8,6 +8,7 @@ public class ThrowScript : MonoBehaviour
     public Camera camera;
     public static bool isDisplayed = true;
     public static bool isResult;
+    public ParticleSystem hitParticlePrefab; // 的に当たったときのパーティクル
     static Rigidbody r;
 
     private CalcScore calcScore;
@@ -56,6 +57,8 @@ public class ThrowScript : MonoBehaviour
             {
                 calcScore.ResultText();
             }
+
+            Instantiate(hitParticlePrefab, transform.position, transform.rotation);
 
             //Debug.Log(collider.gameObject.name);
             GetComponent<Rigidbody>().velocity = Vector3.zero;
