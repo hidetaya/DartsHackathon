@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Threading;
+using System;
 
 public class ThrowScript : MonoBehaviour
 {
@@ -14,9 +15,19 @@ public class ThrowScript : MonoBehaviour
 
     private CalcScore calcScore;
 
+    //設定されない
+    //private LoadimationAnimation m_throwExecute;
+
     // Use this for initialization
-    void Start()
+
+    //反映されない
+    void Awake()
     {
+        //m_throwExecute.ThrowTrigger += ThrowExecute;
+    }
+
+    void Start()
+    {      
         transform.position = RayScript.handPosition;
         //r = GetComponent<Rigidbody>();
 
@@ -45,7 +56,7 @@ public class ThrowScript : MonoBehaviour
         Vector3 direction = RayScript.ray.direction;
         GetComponent<Rigidbody>().AddForce(direction.normalized * 60);
 
-        StartCoroutine("ReturnDarts", 4);
+        StartCoroutine("ReturnDarts", 3);
     }
 
     //ダーツを手元に戻す
@@ -64,7 +75,7 @@ public class ThrowScript : MonoBehaviour
 
         HitTarget(collider);
 
-        isThrowReady = true;
+        //isThrowReady = true;
     }
 
     void HitTarget(Collider collider)

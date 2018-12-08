@@ -3,6 +3,9 @@ using UnityEngine;
 using UnityEditor;
 #endif
 using System.Collections;
+using System;
+
+
 public class LoadimationAnimation : MonoBehaviour
 {
     public Texture multiSpriteTexture;
@@ -27,8 +30,11 @@ public class LoadimationAnimation : MonoBehaviour
     static public bool animReady = true;//TayaAdded
     static public bool stopAnim = false;//TayaAdded
 
+    public event Action ThrowTrigger;
+
     void Start()
     {
+
         if (!multiSpriteTexture) return;
         cacheRenderer = GetComponent<SpriteRenderer>();
         cacheRenderer.sprite = null;
@@ -69,6 +75,7 @@ public class LoadimationAnimation : MonoBehaviour
 
             //“Š‚°‚é
             ThrowScript.isThrowReady = true;
+            //ThrowTrigger();
 
             stopAnim = false;
             animReady = true;
@@ -100,7 +107,7 @@ public class LoadimationAnimation : MonoBehaviour
     IEnumerator HideWaitAnim()
     {
         RayScript.isAnim = false;
-        yield return new WaitForSeconds(5); // num•b‘Ò‹@
+        yield return new WaitForSeconds(15); // num•b‘Ò‹@
         RayScript.isAnim = true;
     }
 
@@ -147,10 +154,10 @@ public class LoadimationAnimationEditor : Editor
     {
         LoadimationAnimation tar = (target as LoadimationAnimation);
         string spriteSheet = AssetDatabase.GetAssetPath(tar.multiSpriteTexture);
-        Object[] objs = AssetDatabase.LoadAllAssetsAtPath(spriteSheet);
+        System.Object[] objs = AssetDatabase.LoadAllAssetsAtPath(spriteSheet);
 
         ArrayList alist = new ArrayList();
-        foreach (Object o in objs)
+        foreach (System.Object o in objs)
         {
             if (o as Sprite != null) alist.Add(o as Sprite);
         }
